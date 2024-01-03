@@ -1,11 +1,13 @@
 import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Shopper implements Comparable<Shopper>{
 	private String name;
 	private List<Item> cart;
 	private double totalPrice;
+	private int checkoutInsertionCounter;
 	
 	
 	/**
@@ -16,6 +18,7 @@ public class Shopper implements Comparable<Shopper>{
 		this.name = name;
 		cart = new ArrayList<Item>();
 		totalPrice = 0;
+		checkoutInsertionCounter = 0;
 	}
 	
 	// GETTERS AND SETTERS:
@@ -42,6 +45,14 @@ public class Shopper implements Comparable<Shopper>{
 	
 	public void setTotalPrice(double price) {
 		this.totalPrice = price;
+	}
+	
+	public int getCheckoutInsertionCounter() {
+		return this.checkoutInsertionCounter;
+	}
+	
+	public void setCheckoutInsertionCounter(int checkoutInsertionCounter) {
+		this.checkoutInsertionCounter = checkoutInsertionCounter;
 	}
 	
 	/**
@@ -235,6 +246,14 @@ public class Shopper implements Comparable<Shopper>{
 	}
 	
 
+	public static Comparator<Shopper> insertionOrderComparator = new Comparator<Shopper>() {
+		@Override
+		public int compare(Shopper thisShopper, Shopper other) {
+			return other.getCheckoutInsertionCounter() - thisShopper.getCheckoutInsertionCounter();
+		}
+	};
+	
+	
 	/**
 	 * CompareTo method, comparing shoppers according to totalPrice of cart
 	 */
@@ -245,7 +264,7 @@ public class Shopper implements Comparable<Shopper>{
 		} else if (this.totalPrice < o.getTotalPrice()) {
 			return -1;
 		} else {
-			return 0;
+			return insertionOrderComparator.compare(this, o);
 		}
 	}
 }

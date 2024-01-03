@@ -10,19 +10,28 @@ class TEST_Shopper {
 	void test_stableSort() {
 		PriorityHeap<Shopper> checkout = new PriorityHeap<Shopper>();
 		
-		// create 2 shopper with equal totalPurchaseValue
-		Shopper first = new Shopper("First");
-		first.setTotalPrice(50);
+		// create 3 shopper with equal totalPurchaseValue
+		
 		
 		Shopper second = new Shopper("Second");
 		second.setTotalPrice(50);
+		
+		Shopper third = new Shopper("Third");
+		third.setTotalPrice(50);
+		
+		Shopper first = new Shopper("First");
+		first.setTotalPrice(50);
 
-		checkout.enqueue(first);
 		checkout.enqueue(second);
+		checkout.enqueue(third);
+		checkout.enqueue(first);
 		
 		Shopper dequeuedFirst = checkout.dequeue();
+		Shopper dequeuedSecond = checkout.dequeue();
+
 		
-		assertEquals(dequeuedFirst, first);
+		assertEquals(dequeuedFirst, second);
+		assertEquals(dequeuedSecond, third);
 	}
 	
 	@Test

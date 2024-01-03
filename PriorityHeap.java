@@ -4,30 +4,33 @@ import java.util.List;
 public class PriorityHeap<T extends Comparable<T>> {
 
     // field
-    private List<T> heap;
+    private List<Shopper> heap;
+    private int insertionCounter;
 
     //constructor
     public PriorityHeap() {
         this.heap = new ArrayList<>();
+        insertionCounter = 0;
     }
     
-    public T peek() {
+    public Shopper peek() {
     	return heap.get(0);
     }
 
     //add to the queue
-    public void enqueue(T element) {
-        heap.add(element);
+    public void enqueue(Shopper shopper) {
+    	shopper.setCheckoutInsertionCounter(++insertionCounter);
+        heap.add(shopper);
         heapifyUp(); // Restore heap property
     }
 
     //remove from the queue
-    public T dequeue() {
+    public Shopper dequeue() {
         if (isEmpty()) {
             throw new IllegalStateException("Priority queue is empty");
         }
 
-        T highestPriority = heap.get(0);
+        Shopper highestPriority = heap.get(0);
         int lastIndex = heap.size() - 1;
         // Move the last element of the array to the zeroth position
         heap.set(0, heap.get(lastIndex));
@@ -93,7 +96,7 @@ public class PriorityHeap<T extends Comparable<T>> {
 
     //swapping method
     public void swap(int i, int j) {
-        T temp = heap.get(i);
+    	Shopper temp = heap.get(i);
         heap.set(i, heap.get(j));
         heap.set(j, temp);
     }
